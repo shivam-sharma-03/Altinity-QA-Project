@@ -1,0 +1,39 @@
+name: ClickHouse QA Tests
+
+# defining the action fot trigger.
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  run-api-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    # creatin clickhouse container
+    - name: Start ClickHouse Container
+      run: |
+        docker run -d --name clickhouse-qa-server -e CLICKHOUSE_PASSWORD=qa_password -p 8123:8123 clickhouse/clickhouse-server
+        sleep 10 # Wait 10 seconds for the database to fully boot up
+
+    # python setup
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    # installing the packages from requirements.txt
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    # running the test suite!
+    - name: Run Pytest
+      run: |
+        pytest test_db.py -v
