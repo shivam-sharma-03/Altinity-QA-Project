@@ -1,5 +1,7 @@
 # Altinity QA Automation - Proof of Work
 
+[![ClickHouse QA Tests](https://github.com/shivam-sharma-03/Altinity-QA-Project/actions/workflows/qa-pipeline.yml/badge.svg?branch=main)](https://github.com/shivam-sharma-03/Altinity-QA-Project/actions/workflows/qa-pipeline.yml)
+
 ## Overview
 This repository contains an automated API test suite built as a Proof of Work for the QA Engineer position at Altinity. It demonstrates backend API test automation against a ClickHouse database using Python and Pytest.
 
